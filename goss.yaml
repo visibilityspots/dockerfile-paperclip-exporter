@@ -1,0 +1,36 @@
+process:
+  python3:
+    running: true
+
+user:
+  exporter:
+    exists: true
+    uid: 10001
+
+file:
+  /opt/paperclip-exporter/exporter.py:
+    exists: true
+
+command:
+  python3 --version:
+    exit-status: 0
+  id -u:
+    exit-status: 0
+    stdout:
+      - "10001"
+
+port:
+  tcp:9878:
+    listening: true
+
+http:
+  http://127.0.0.1:9878/healthz:
+    status: 200
+    body:
+      - ok
+  http://127.0.0.1:9878/metrics:
+    status: 200
+    body:
+      # no API key in the test container: the exporter refuses to poll
+      - paperclip_up 0
+      - paperclip_last_poll_success_timestamp_seconds 0
