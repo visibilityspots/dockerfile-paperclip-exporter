@@ -1,4 +1,4 @@
-FROM python:3.13.18-alpine3.24
+FROM python:3.15.2-alpine3.24
 # apk upgrade: the python image lags behind the alpine package repo.
 # The exporter is stdlib only, so pip (and the CVEs in its vendored packages) goes.
 RUN apk upgrade --no-cache \
