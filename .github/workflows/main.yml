@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - '*'
+  # test only: the shared workflow skips deploy on pull requests
+  pull_request:
+    branches: [main]
+
+# new repos get a read-only GITHUB_TOKEN; the release and CHANGELOG commit need write
+permissions:
+  contents: write
+
+jobs:
+  main:
+    uses: visibilityspots/github-workflows/.github/workflows/main.yml@main
+    with:
+      # no API key on purpose: the exporter starts, serves /metrics and refuses to poll
+      run_args: '-e PAPERCLIP_API=http://127.0.0.1:1/api -e PAPERCLIP_COMPANY_ID=test'
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
