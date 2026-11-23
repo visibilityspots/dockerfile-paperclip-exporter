@@ -1,0 +1,18 @@
+name: trivy
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+  schedule:
+    - cron: '23 19 * * 4'
+
+# new repos get a read-only GITHUB_TOKEN; the SARIF upload needs security-events: write
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    uses: visibilityspots/github-workflows/.github/workflows/trivy.yml@main
