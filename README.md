@@ -88,7 +88,7 @@ render leaves for a missing key), the exporter does not poll and reports `paperc
 | `paperclip_routines` | | number of routines |
 | `paperclip_routine_active` | `routine`, `routine_id` | 1 when the routine is active |
 | `paperclip_routine_last_run_timestamp_seconds` | `routine`, `routine_id` | last run of the routine |
-| `paperclip_routine_last_run_success` | `routine`, `routine_id` | 1 when the last run reached `completed`; `issue_created` is not success |
+| `paperclip_routine_last_run_success` | `routine`, `routine_id` | 1 when the last run reached `completed`; `issue_created` is not success. Absent until the routine's first run |
 | `paperclip_issues` | `status` | issues per status |
 
 Labels never carry free text: names are lowercased and stripped to `[a-z0-9_-]`, template

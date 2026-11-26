@@ -211,8 +211,9 @@ def poll():
             if t:
                 o.m("paperclip_routine_last_run_timestamp_seconds", t, lab,
                     "completedAt (or triggeredAt) of the routine's last run")
-            o.m("paperclip_routine_last_run_success", 1 if lr.get("status") == "completed" else 0,
-                lab, "1 when the routine's last run status is completed (issue_created is not)")
+            if lr:  # a routine that never ran has no last run to judge
+                o.m("paperclip_routine_last_run_success", 1 if lr.get("status") == "completed" else 0,
+                    lab, "1 when the routine's last run status is completed (issue_created is not)")
 
     issues = fetch("issues", f"{C}/issues")
     if issues is not None:
